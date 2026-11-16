@@ -1,0 +1,7 @@
+config.php
+*contrasena*
+.DS_Store
+uploads/*
+!uploads/index.html
+!uploads/.htaccess
+*.log

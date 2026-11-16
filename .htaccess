@@ -1,0 +1,25 @@
+# Distribuidora Demo
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Redirigir a HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  RewriteRule ^robots\.txt$ robots.php [L]
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+  # Carpetas y archivos internos: no accesibles desde el navegador
+  RewriteRule ^(inc|instalacion)(/|$) - [F,L]
+</IfModule>
+
+<FilesMatch "^(config\.php|config\.example\.php|.*\.sql|.*\.md)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|webp|jpg|png|svg|woff2)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
